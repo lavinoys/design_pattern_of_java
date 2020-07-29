@@ -1,2 +1,1 @@
-###### Iterator Pattern
-[Link](plantUml/Iterator_Pattern/IteratorPattern.md).
+[Iterator Pattern](plantUml/Iterator_Pattern/IteratorPattern.md).
