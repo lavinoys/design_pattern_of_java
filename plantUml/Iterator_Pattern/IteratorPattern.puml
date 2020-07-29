@@ -1,0 +1,67 @@
+@startuml
+scale 1.5
+allowmixing
+
+package junit {
+    rectangle Main
+    note left of Main
+    동작 테스트용 클래스
+    end note
+}
+
+package Store {
+    +interface Aggregate <<interface>> {
+        +{abstract} Iterator iterator()
+    }
+    note left of Aggregate
+        집합체를 타나내는 인터페이스
+    end note
+
+    +interface Iterator <<interface>> {
+        +{abstract} boolean hasNext()
+        +{abstract} Object next()
+    }
+    note right of Iterator
+        하나씩 나열하면서 검색을 실행하는 인터페이스
+    end note
+
+    +class BookShelf {
+        -Book[] books
+        -int last
+        {field}+BookShelf(int maxsize)
+        +Book getBookAt(int index)
+        +void appendBook(Book book)
+        +int getLength()
+        +Iterator iterator()
+    }
+    note bottom of BookShelf
+        서가를 나타내는 클래스
+    end note
+
+    +class BookShelfIterator <implements Iterator> {
+        -BookShelf bookShelf;
+        -int index;
+        {field}BookShelfIterator(BookShelf bookShelf)
+        +boolean hasNext()
+        +Object next()
+    }
+    note right of BookShelfIterator
+        집합체를 타나내는 인터페이스
+    end note
+
+    +class Book {
+        -String name;
+        {field}+Book(String name)
+    }
+    note bottom of Book
+        책을 나타내는 클래스
+    end note
+}
+
+Main -right-> BookShelf : Uses
+Aggregate -right-> Iterator : Creates >
+BookShelf .up.> Aggregate
+BookShelfIterator .up.> Iterator
+BookShelfIterator o-left-> BookShelf
+BookShelf o-down-> Book
+@enduml
