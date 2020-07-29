@@ -9,7 +9,7 @@ package junit {
     end note
 }
 
-package Store {
+package Iterator {
     +interface Aggregate <<interface>> {
         +{abstract} Iterator iterator()
     }

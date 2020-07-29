@@ -1,0 +1,45 @@
+@startuml
+scale 1.5
+allowmixing
+
+package junit {
+    rectangle Main
+    note left of Main
+        동작 테스트용 클래스
+    end note
+}
+
+package com.adapter {
+    +interface Print <<interface>>{
+        +{abstract}void printWeak()
+        +{abstract}void printStrong()
+    }
+    note bottom
+        필요한 것
+    end note
+
+    +class PrintBanner <extends Banner implements Print>{
+        +PrintBanner(String string)
+        +void printWeak()
+        +void printStrong()
+    }
+    note bottom
+        교환 장치
+    end note
+
+    +class Banner {
+        -String string
+        +Banner(String string)
+        +void showWithParen()
+        +void showWithAster()
+    }
+    note bottom
+        제공되고 있는 것
+    end note
+}
+
+Main -down-> Print : uses >
+PrintBanner .left.> Print
+PrintBanner -right-> Banner
+
+@enduml

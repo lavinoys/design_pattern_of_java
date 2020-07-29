@@ -1,5 +1,7 @@
 package com.example.design;
 
+import com.example.design.adapter.Print;
+import com.example.design.adapter.PrintBanner;
 import com.example.design.iterator.Book;
 import com.example.design.iterator.BookShelf;
 import com.example.design.iterator.Iterator;
@@ -24,5 +26,13 @@ public class MainTest {
             Book book = (Book) it.next();
             System.out.println(book.getName());
         }
+    }
+
+    @Test
+    @DisplayName("Adapter Pattern")
+    void adapterTest() {
+        Print p = new PrintBanner("Hello");
+        p.printWeak();
+        p.printStrong();
     }
 }
