@@ -1,0 +1,32 @@
+@startuml Factory_Method_Pattern_Sequence
+hide footbox
+scale 1.5
+
+participant "Main" as main
+participant "Factory" as fac
+participant "IDCardFactory" as idcf
+participant "IDCard" as idc
+participant "Product" as pro
+
+main->idcf : Factory factory = new IDCardFactory()
+main<--idcf
+
+main->fac : Product card1 = factory.create("홍길동")
+fac->idcf : createProduct(owner)
+idcf->idc : new IDCard(owner)
+idcf<--idc : 홍길동의 카드를 만듭니다.
+fac<--idcf
+
+fac->idcf : registerProduct(p)
+idcf->idc : getOwner()
+idcf<--idc
+idcf->idcf : owners.add()
+
+fac->pro
+fac<--pro
+main<--fac
+
+main->idc : user()
+main<--idc
+
+@enduml

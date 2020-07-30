@@ -1,0 +1,58 @@
+@startuml Template_Method_Pattern
+scale 1.5
+allowmixing
+
+package junit {
+    rectangle Main
+    note left of Main
+        동작 테스트용 클래스
+    end note
+}
+
+package design.factory.framework {
+    +abstract class Product {
+        +{abstract}void use()
+    }
+    note top of Product
+        추상 메소드 use만 정의되어 있는 추상 클래스
+    end note
+
+
+    +abstract class Factory {
+        +final Product create(String owner)
+        #{abstract}Product createProduct(String owner)
+        #{abstract}void registerProduct(Product product)
+    }
+    note top of Factory
+        메소드 create을 구현하고 있는 추상 클래스
+    end note
+}
+
+package design.factory.idcard {
+    +class IDCard <extends Product> {
+        -String owner
+        {field} IDCard(String owner)
+        +void use()
+        +String getOwner()
+    }
+    note bottom of IDCard
+        메소드 use를 구현하고 있는 클래스
+    end note
+
+    +class IDCardFactory <extends Factory> {
+        -List owners
+        #Product createProduct(String owner)
+        #void registerProduct(Product product)
+        +List getOwners()
+    }
+    note bottom of IDCardFactory
+        메소드 createProduct, registerProduct를 구현하고 있는 클래스
+    end note
+}
+
+Main -right-> IDCardFactory : Uses >
+IDCardFactory -up-> Factory
+IDCardFactory -right-> IDCard : Creates >
+Factory -right-> Product : Creates >
+IDCard -up-> Product
+@enduml

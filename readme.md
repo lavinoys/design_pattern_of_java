@@ -3,3 +3,5 @@
 > [Adapter_Pattern](plantUml/Adapter_Pattern/Adapter_Pattern.md).
 >
 > [Template_Method_Pattern](plantUml/Template_Method_Pattern/Template_Method_Pattern.md).
+>
+> [Factory_Method_Pattern](plantUml/Factory_Method_Pattern/Factory_Method_Pattern.md).
