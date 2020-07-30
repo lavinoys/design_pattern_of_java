@@ -1,0 +1,48 @@
+@startuml Template_Method_Pattern
+scale 1.5
+allowmixing
+
+package junit {
+    rectangle Main
+    note left of Main
+        동작 테스트용 클래스
+    end note
+}
+
+package design.template {
+    +abstract class AbstractDisplay {
+        +{abstract}void open()
+        +{abstract}void print()
+        +{abstract}void close()
+        +final void display()
+    }
+    note right of AbstractDisplay
+        메소드 display만 구현되고 있는 추상 클래스
+    end note
+    +class CharDisply <extends AbstractDisplay> {
+        -char ch
+        {field}+CharDisply(char ch)
+        +void open()
+        +void print()
+        +void close()
+    }
+    note bottom of CharDisply
+        메소드 open, print, close를 구현하고 있는 클래스
+    end note
+    +class StringDisplay <extends AbstractDisplay> {
+        -String string
+        -int width
+        {field}+StringDisplay(String string)
+        +void open()
+        +void print()
+        +void close()
+        -void printLine()
+    }
+    note bottom of StringDisplay
+        메소드 open, print, close를 구현하고 있는 클래스
+    end note
+}
+Main -right-> AbstractDisplay : Uses >
+CharDisply -up-> AbstractDisplay
+StringDisplay  -up-> AbstractDisplay
+@enduml
