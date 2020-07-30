@@ -5,3 +5,5 @@
 > [Template_Method_Pattern](plantUml/Template_Method_Pattern/Template_Method_Pattern.md).
 >
 > [Factory_Method_Pattern](plantUml/Factory_Method_Pattern/Factory_Method_Pattern.md).
+>
+> [Singleton_Pattern](plantUml/Singleton_Pattern/Singleton_Pattern.md).

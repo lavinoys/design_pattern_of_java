@@ -1,0 +1,15 @@
+@startuml Singleton_Pattern
+scale 2
+
+allowmixing
+rectangle Main
+
++class Singleton {
+    -{Static} Singleton singleton
+    -{field}privete Singleton
+    +{static}Singleton getInstance()
+}
+
+Main -> Singleton : Ueses >
+
+@enduml

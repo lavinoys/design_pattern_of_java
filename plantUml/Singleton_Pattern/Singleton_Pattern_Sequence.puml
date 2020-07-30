@@ -1,0 +1,22 @@
+@startuml Singleton_Pattern_Sequence
+hide footbox
+scale 2
+
+participant "Main" as m
+participant "Singleton" as s
+
+[->m : start
+activate m
+
+m->s : Singleton obj1 = Singleton.getInstance();
+activate m
+activate s
+m<--s: Singleton #1
+
+m->s : Singleton obj2 = Singleton.getInstance();
+m<--s: Singleton #1
+
+[<-m : end
+deactivate s
+deactivate m
+@enduml

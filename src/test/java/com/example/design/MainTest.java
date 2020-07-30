@@ -8,6 +8,7 @@ import com.example.design.factory.idcard.IDCardFactory;
 import com.example.design.iterator.Book;
 import com.example.design.iterator.BookShelf;
 import com.example.design.iterator.Iterator;
+import com.example.design.singleton.Singleton;
 import com.example.design.template.AbstractDisplay;
 import com.example.design.template.CharDisply;
 import com.example.design.template.StringDisplay;
@@ -63,5 +64,20 @@ public class MainTest {
         card1.use();
         card2.use();
         card3.use();
+    }
+
+    @Test
+    @DisplayName("Singleton Pattern")
+    void singletonTest() {
+        System.out.println("Start.");
+        Singleton obj1 = Singleton.getInstance();
+        Singleton obj2 = Singleton.getInstance();
+
+        if(obj1 == obj2) {
+            System.out.println("obj1과 obj2는 같은 인스턴스 입니다.");
+        } else {
+            System.out.println("obj1과 obj2는 다른 인스턴스 입니다.");
+        }
+        System.out.println("End.");
     }
 }
