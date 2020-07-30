@@ -8,6 +8,10 @@ import com.example.design.factory.idcard.IDCardFactory;
 import com.example.design.iterator.Book;
 import com.example.design.iterator.BookShelf;
 import com.example.design.iterator.Iterator;
+import com.example.design.prototype.MessageBox;
+import com.example.design.prototype.UnderlinePen;
+import com.example.design.prototype.framework.Manager;
+import com.example.design.prototype.framework.ProductPrototype;
 import com.example.design.singleton.Singleton;
 import com.example.design.template.AbstractDisplay;
 import com.example.design.template.CharDisply;
@@ -79,5 +83,24 @@ public class MainTest {
             System.out.println("obj1과 obj2는 다른 인스턴스 입니다.");
         }
         System.out.println("End.");
+    }
+
+    @Test
+    @DisplayName("Prototype Pattern")
+    void prototypeTest() {
+        Manager manager = new Manager();
+        UnderlinePen upen = new UnderlinePen('~');
+        MessageBox mbox = new MessageBox('*');
+        MessageBox sbox = new MessageBox('/');
+        manager.register("strong message", upen);
+        manager.register("warning box", mbox);
+        manager.register("slash box", sbox);
+
+        ProductPrototype p1 = manager.create("strong message");
+        p1.use("Hello, world.");
+        ProductPrototype p2 = manager.create("warning box");
+        p2.use("Hello, world.");
+        ProductPrototype p3 = manager.create("slash box");
+        p3.use("Hello, world.");
     }
 }

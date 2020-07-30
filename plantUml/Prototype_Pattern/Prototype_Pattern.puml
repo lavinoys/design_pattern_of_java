@@ -1,0 +1,52 @@
+@startuml Prototype_Pattern
+scale 1.5
+
+allowmixing
+rectangle Main
+note bottom
+    동작 테스트용 클래스
+end note
+
+package framework {
+    +interface Product <extends Cloneable> {
+        +{abstract} void use(String s)
+        +{abstract} Product createClone()
+    }
+    note top
+        추상 메소드 use와 createClone이 선언되어 있는 인터페이스
+    end note
+
+    +class Manager {
+        -HashMap showcase
+        +void register(String name, Product proto)
+    }
+    note top
+        createClone을 사용해서 인스턴스를 복제하는 클래스
+    end note
+}
+
++class MessageBox <implements Product> {
+    -char decochar
+    {field}+ MessageBox(char decochar)
+    +void use(String s)
+    +Product createClone()
+}
+note bottom
+    문자열 테두리로 표시하는 클래스, use와 createClone을 구현
+end note
+
++class UnderlinePen <implements Product> {
+    - char ulchar
+    {field}+ UnderlinePen(char ulchar)
+    +void use(String s)
+    +Product createClone()
+}
+note bottom
+    문자열에 밑줄을 표시하는 클래스, use와 createClone을 구현
+end note
+
+Main -right-> Manager : Call
+Manager -right-> Product : Uses >
+UnderlinePen .up.> Product
+MessageBox .up.> Product
+@enduml
