@@ -2,6 +2,9 @@ package com.example.design;
 
 import com.example.design.adapter.Print;
 import com.example.design.adapter.PrintBanner;
+import com.example.design.builder.Director;
+import com.example.design.builder.HTMLBuilder;
+import com.example.design.builder.TextBuilder;
 import com.example.design.factory.framework.Factory;
 import com.example.design.factory.framework.Product;
 import com.example.design.factory.idcard.IDCardFactory;
@@ -102,5 +105,25 @@ public class MainTest {
         p2.use("Hello, world.");
         ProductPrototype p3 = manager.create("slash box");
         p3.use("Hello, world.");
+    }
+
+    @Test
+    @DisplayName("Builder Pattern")
+    void builderTextTest() {
+        TextBuilder textBuilder = new TextBuilder();
+        Director director = new Director(textBuilder);
+        director.construct();
+        String result = textBuilder.getResult();
+        System.out.println(result);
+    }
+
+    @Test
+    @DisplayName("Builder Pattern")
+    void builderHtmlTest() {
+        HTMLBuilder htmlBuilder = new HTMLBuilder();
+        Director director = new Director(htmlBuilder);
+        director.construct();
+        String filename = htmlBuilder.getResult();
+        System.out.println(filename + "가 작성되었습니다.");
     }
 }
