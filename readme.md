@@ -11,3 +11,5 @@
 > [Prototype_Pattern](plantUml/Prototype_Pattern/Prototype_Pattern.md).
 >
 > [Builder_Pattern](plantUml/Builder_Pattern/Builder_Pattern.md).
+>
+> [Abstract_Factory_Pattern](plantUml/Abstract_Factory_Pattern/Abstract_Factory_Pattern.md).

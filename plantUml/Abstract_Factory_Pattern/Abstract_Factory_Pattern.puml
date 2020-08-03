@@ -1,0 +1,186 @@
+@startuml Abstract_Factory_Pattern
+scale 1.5
+allowmixing
+
+package junit {
+    rectangle Main
+    note left of Main
+        동작 테스트용 클래스
+    end note
+}
+
+package design.abscract_factory.factory {
+    +abstract class AbstractFactory {
+        {field}+{static} AbstractFactory getFactory(String classname)
+        +{abstract}Link createLink(String caption, String url)
+        +{abstract}Tray createTray(String caption)
+        +{abstract}Page createPage(String title, String author)
+    }
+    note bottom of AbstractFactory
+        추상적인 공장을 나타내는 클래스(Link, Tray, Page를 만든다)
+    end note
+
+    +abstract class Link <extends Item>{
+        #String url
+        {field}+Link(String caption, String url)
+    }
+    note bottom of Link
+        추상적인 부품 : HTML의 Link를 나타내는 클래스
+    end note
+
+    +abstract class Tray <extends Item> {
+        {field}#ArrayList tray = new ArrayList()
+        {field}+Tray(String caption)
+        +void add(Item item)
+    }
+    note bottom of Tray
+        추상적인 부품 : Link나 Tray를 모은 클래스
+    end note
+
+    +abstract class Page {
+        #String title;
+        #String author;
+        {field}#ArrayList content = new ArrayList()
+        {field+Page(String title, String author)
+        +void add(Item item)
+        +void output()
+        +{abstract} String makeHTML()
+    }
+    note bottom of Page
+        추상적인 제품 : HTML의 Page를 나타내는 클래스
+    end note
+
+    +abstract class Item {
+        #String caption
+        {field}+Item(String caption)
+        +{abstract} String makeHTML()
+    }
+    note top of Item
+        Link와 Tray를 통일적으로 취급하기 위한 클래스
+    end note
+}
+
+package design.abscract_factory.listfactory {
+    +class ListFactory <extends AbstractFactory> {
+        +Link createLink(String caption, String url)
+        +Tray createTray(String caption)
+        +Page createPage(String title, String author)
+    }
+    note bottom of ListFactory
+        구체적인 공장을 나타내는 클래스(ListLink, ListTray, ListPage를 만든다)
+    end note
+
+    +class ListLink <extends Link> {
+        {field}+ListLink(String cation, String url)
+        +String makeHTML()
+    }
+    note bottom of ListLink
+        구체적인 부품 : HTML의 Link를 나타내는 클래스
+    end note
+
+    +class ListPage <extends Page> {
+        {field}+ListPage(String title, String author)
+        +String makeHTML()
+    }
+    note bottom of ListPage
+        구체적인 제품 : HTML의 Page를 나타내는 클래스
+    end note
+
+    +class ListTray <extends Tray> {
+        {field}+ListTray(String caption)
+        +String makeHTML()
+    }
+    note bottom of ListTray
+        구체적인 제품 : Link나 Tray를 모은 클래스
+    end note
+}
+
+
+package design.abscract_factory.tablefactory {
+    +class TableFactory <extends AbstractFactory> {
+        +Link createLink(String caption, String url)
+        +Tray createTray(String caption)
+        +Page createPage(String title, String author)
+    }
+    note bottom of TableFactory
+        구체적인 공장을 나타내는 클래스(TableLink, TableTray, TablePage 만든다)
+    end note
+
+    +class TableLink <extends Link> {
+        {field}+TableLink(String caption, String url)
+        +String makeHTML()
+    }
+    note bottom of TableLink
+        구체적인 부품 : HTML의 Link를 나타내는 클래스
+    end note
+
+    +class TablePage <extends Page> {
+        {field}+TablePage(String title, String author)
+        +String makeHTML()
+    }
+    note bottom of TablePage
+        구체적인 제품 : HTML의 Page를 나타내는 클래스
+    end note
+
+    +class TableTray <extends Tray> {
+        {field}+TableTray (String cation)
+        +String makeHTML()
+    }
+    note bottom of TableTray
+        구체적인 제품 : TableLink나 TableTray를 모은 클래스
+    end note
+}
+
+ListFactory -up-> ListLink : Creates >
+ListFactory -up-> ListTray : Creates >
+ListFactory -up-> ListPage : Creates >
+ListFactory -up---|> AbstractFactory
+ListLink -up-|> Link
+ListTray -up-|> Tray
+ListPage -up-|> Page
+
+TableFactory -up-> TableLink : Creates >
+TableFactory -up-> TableTray : Creates >
+TableFactory -up-> TablePage : Creates >
+TableFactory -up---|> AbstractFactory
+TableLink -up-|> Link
+TableTray -up-|> Tray
+TablePage -up-|> Page
+
+AbstractFactory -up-> Link : Creates >
+AbstractFactory -up-> Tray : Creates >
+AbstractFactory -up-> Page : Creates >
+
+Link -up-|> Item
+Tray -up-|> Item
+Tray o-up-> Item
+
+Main -right-> AbstractFactory : Uses >
+
+' ListFactory --> ListLink : Creates >
+' ListFactory --> ListTray : Creates >
+' ListFactory --> ListPage : Creates >
+' ListFactory ----|> AbstractFactory
+' ListLink --|> Link
+' ListTray --|> Tray
+' ListPage --|> Page
+
+' TableFactory --> TableLink : Creates >
+' TableFactory --> TableTray : Creates >
+' TableFactory --> TablePage : Creates >
+' TableFactory ----|> AbstractFactory
+' TableLink --|> Link
+' TableTray --|> Tray
+' TablePage --|> Page
+
+' AbstractFactory --> Link : Creates >
+' AbstractFactory --> Tray : Creates >
+' AbstractFactory --> Page : Creates >
+
+' Link --|> Item
+' Tray --|> Item
+' Tray o--> Item
+
+' Main -right-> AbstractFactory : Uses >
+
+@enduml

@@ -1,5 +1,9 @@
 package com.example.design;
 
+import com.example.design.abstract_factory.factory.AbstractFactory;
+import com.example.design.abstract_factory.factory.Link;
+import com.example.design.abstract_factory.factory.Page;
+import com.example.design.abstract_factory.factory.Tray;
 import com.example.design.adapter.Print;
 import com.example.design.adapter.PrintBanner;
 import com.example.design.builder.Director;
@@ -125,5 +129,39 @@ public class MainTest {
         director.construct();
         String filename = htmlBuilder.getResult();
         System.out.println(filename + "가 작성되었습니다.");
+    }
+
+    @Test
+    @DisplayName("Abstract Factory Pattern")
+    void abstractFactoryTest() {
+//        String template = "com.example.design.abstract_factory.listfactory.ListFactory";
+        String factoryName = "com.example.design.abstract_factory.tablefactory.TableFactory";
+        AbstractFactory factory = AbstractFactory.getFactory(factoryName);
+
+        Link joins = factory.createLink("중앙일보", "http://www.joins.com/");
+        Link chosun = factory.createLink("조선일보", "http://www.chosun.com/");
+
+        Link us_yahoo = factory.createLink("Yahoo!", "http://www.yahoo.com/");
+        Link kr_yahoo = factory.createLink("Yahoo!Korea", "http://www.yahoo.co.kr/");
+        Link excite = factory.createLink("Excite", "http://www.excite.com/");
+        Link google = factory.createLink("Google", "http://www.google.com/");
+
+        Tray trayNews = factory.createTray("신문");
+        trayNews.add(joins);
+        trayNews.add(chosun);
+
+        Tray trayYahoo = factory.createTray("Yahoo!");
+        trayYahoo.add(us_yahoo);
+        trayYahoo.add(kr_yahoo);
+
+        Tray traySearch = factory.createTray("검색엔진");
+        traySearch.add(trayYahoo);
+        traySearch.add(excite);
+        traySearch.add(google);
+
+        Page page = factory.createPage("LinkPage", "영진닷컴");
+        page.add(trayNews);
+        page.add(traySearch);
+        page.output();
     }
 }
