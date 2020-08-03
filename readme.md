@@ -8,6 +8,6 @@
 >
 > [Singleton_Pattern](plantUml/Singleton_Pattern/Singleton_Pattern.md).
 >
-> [Prototype_Pattern](plantUml/Prototype_Pattern/Prototype_Pattern.md)
+> [Prototype_Pattern](plantUml/Prototype_Pattern/Prototype_Pattern.md).
 >
->[Prototype_Pattern](plantUml/Builder_Pattern/Builder_Pattern.md)
+> [Builder_Pattern](plantUml/Builder_Pattern/Builder_Pattern.md).
