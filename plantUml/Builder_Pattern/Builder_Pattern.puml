@@ -1,0 +1,65 @@
+@startuml Builder_Pattern
+scale 1.5
+allowmixing
+
+package junit {
+    rectangle Main
+    note left of Main
+        동작 테스트용 클래스
+    end note
+}
+
+package design.builder {
+    +abstract class Builder {
+        +{abstract} void makeTitle(String title)
+        +{abstract} void makeString(String str)
+        +{abstract} void makeItems(String[] items)
+        +{abstract} void close()
+    }
+    note top of Builder
+        문서를 구성하기 위한 메소드를 결정하는 추상 클래스
+    end note
+
+    +class Director {
+        -Builder builder
+        {field}+Director(Builder builder)
+        +void construct()
+    }
+    note top of Director
+        한 개의 문서를 만드는 클래스
+    end note
+
+    +class HTMLBuilder <extends Builder> {
+        -String filename;
+        -PrintWriter writer;
+        +void makeTitle(String title)
+        +void makeString(String str)
+        +void makeItems(String[] items)
+        +void close()
+        +String getResult()
+    }
+    note bottom of HTMLBuilder
+        HTML 파일을 이용해서 문서를 만드는 클래스
+    end note
+
+    +class TextBuilder <extends Builder> {
+        -StringBuffer buffer = new StringBuffer()
+        +void makeTitle(String title)
+        +void makeString(String str)
+        +void makeItems(String[] items)
+        +void close()
+        +String getResult()
+    }
+    note bottom of TextBuilder
+        일반 텍스트(보통의 문자열)를 이용해서 문서를 만드는 클래스
+    end note
+}
+
+Main -right-> Director : Uses >
+Director o-right-> Builder
+TextBuilder -up-> Builder
+HTMLBuilder -up-> Builder
+Main --> TextBuilder : Uses >
+Main --> HTMLBuilder : uses >
+
+@enduml
