@@ -1,0 +1,61 @@
+@startuml Bridge_Pattern
+scale 1.5
+allowmixing
+
+package junit {
+    rectangle Main
+    note left of Main
+        동작 테스트용 클래스
+    end note
+}
+
+package design.bridge {
+    +class DisplayBridge {
+        -DisplayImplBridge impl
+        {field}+DisplayBridge(DisplayImplBridge impl)
+        +void open()
+        +void print()
+        +void close()
+        -final void dispay()
+    }
+    note top of DisplayBridge
+        표시한다는 클래스
+    end note
+
+    +class StringDisplayImplBridge <extends DisplayImplBridge> {
+        -String string
+        -int width;
+        {field}+StringDisplayImplBridge(String string)
+        +void rawOpen()
+        +void rawPrint()
+        +void rawClose()
+        -void printLine()
+    }
+    note bottom of StringDisplayImplBridge
+        문자열을 사용해서 표시한다는 클래스
+    end note
+    
+
+    +abstract class DisplayImplBridge {
+        +{abstract}void rawOpen();
+        +{abstract}void rawPrint();
+        +{abstract}void rawClose();
+    }
+    note top of DisplayImplBridge
+        표시한다는 클래스
+    end note
+
+    +class CountDisplayBridge <extends DisplayBridge> {
+        {field}+CountDisplayBridge(DisplayImplBridge impl)
+        +void multiDisplay(int times)
+    }
+    note bottom of CountDisplayBridge
+        지정 횟수만큼 표시한다는 기능을 추가하는 클래스
+    end note
+}
+
+DisplayBridge o-> DisplayImplBridge
+DisplayBridge <|-- CountDisplayBridge
+DisplayImplBridge <|-- StringDisplayImplBridge
+
+@enduml

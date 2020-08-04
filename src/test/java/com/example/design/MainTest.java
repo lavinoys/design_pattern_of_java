@@ -6,6 +6,9 @@ import com.example.design.abstract_factory.factory.Page;
 import com.example.design.abstract_factory.factory.Tray;
 import com.example.design.adapter.Print;
 import com.example.design.adapter.PrintBanner;
+import com.example.design.bridge.CountDisplayBridge;
+import com.example.design.bridge.DisplayBridge;
+import com.example.design.bridge.StringDisplayImplBridge;
 import com.example.design.builder.Director;
 import com.example.design.builder.HTMLBuilder;
 import com.example.design.builder.TextBuilder;
@@ -163,5 +166,17 @@ public class MainTest {
         page.add(trayNews);
         page.add(traySearch);
         page.output();
+    }
+    @Test
+    @DisplayName("Bridge Pattern")
+    void bridgeTest() {
+        DisplayBridge d1 = new DisplayBridge(new StringDisplayImplBridge("Hello, Korea."));
+        DisplayBridge d2 = new CountDisplayBridge(new StringDisplayImplBridge("Hello, World."));
+        CountDisplayBridge d3 = new CountDisplayBridge(new StringDisplayImplBridge("Hello, Universe."));
+
+        d1.dispay();
+        d2.dispay();
+        d3.dispay();
+        d3.multiDisplay(5);
     }
 }
