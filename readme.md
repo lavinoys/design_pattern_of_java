@@ -15,3 +15,5 @@
 > [Abstract_Factory_Pattern](plantUml/Abstract_Factory_Pattern/Abstract_Factory_Pattern.md).
 >
 > [Bridge_Pattern](plantUml/Bridge_Pattern/Bridge_Pattern.md).
+>
+> [Strategy_Pattern](plantUml/Strategy_Pattern/Strategy_Pattern.md).

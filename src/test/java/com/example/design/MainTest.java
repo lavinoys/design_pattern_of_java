@@ -23,6 +23,10 @@ import com.example.design.prototype.UnderlinePen;
 import com.example.design.prototype.framework.Manager;
 import com.example.design.prototype.framework.ProductPrototype;
 import com.example.design.singleton.Singleton;
+import com.example.design.strategy.HandStrategy;
+import com.example.design.strategy.PlayerStrategy;
+import com.example.design.strategy.ProbStrategy;
+import com.example.design.strategy.WinningStrategy;
 import com.example.design.template.AbstractDisplay;
 import com.example.design.template.CharDisply;
 import com.example.design.template.StringDisplay;
@@ -178,5 +182,39 @@ public class MainTest {
         d2.dispay();
         d3.dispay();
         d3.multiDisplay(5);
+    }
+
+    @Test
+    @DisplayName("Strategy Pattern")
+    void StrategyTest() {
+
+        int seed1 = 314;
+        int seed2 = 15;
+
+        PlayerStrategy player1 = new PlayerStrategy("두리", new WinningStrategy(seed1));
+        PlayerStrategy player2 = new PlayerStrategy("하나", new ProbStrategy(seed2));
+
+        for (int i = 0; i < 10000; i++) {
+            HandStrategy nextHand1 = player1.nextHand();
+            HandStrategy nextHand2 = player2.nextHand();
+
+            if (nextHand1.isStrongerThan(nextHand2)) {
+                System.out.println("Winner:" + player1);
+                player1.win();
+                player2.lose();
+            } else if (nextHand2.isStrongerThan(nextHand1)) {
+                System.out.println("Winner:" + player2);
+                player1.lose();
+                player2.win();
+            } else {
+                System.out.println("Even...");
+                player1.even();
+                player2.even();
+            }
+        }
+
+        System.out.println("Total result:");
+        System.out.println(player1.toString());
+        System.out.println(player2.toString());
     }
 }

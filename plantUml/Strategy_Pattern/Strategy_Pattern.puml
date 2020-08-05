@@ -1,0 +1,79 @@
+@startuml Strategy_Pattern.puml
+scale 1.5
+allowmixing
+
+
++interface HandInterfaceStrategy <<interface>> {
+    +{abstract} HandStrategy nextHand()
+    +{abstract} void study(boolean win)
+}
+note top of HandInterfaceStrategy
+    가위바위보의 전략을 표시하는 인터페이스
+end note
+
++class HandStrategy {
+    +{static}final int HANDVALUE_GUU
+    +{static}final int HANDVALUE_CHO
+    +{static}final int HANDVALUE_PAA
+    +{static}final HandStrategy[] hand 
+    -{static} final String[] name
+    - int handValue
+    {field} - HandStrategy(int handValue)
+    +{static} HandStrategy getHand(int handValue)
+    +boolean isStrongerThan(HandStrategy h)
+    +boolean isWeakerThan(HandStrategy h)
+    -int fight(HandStrategy h)
+    +String toString()
+}
+note top of HandStrategy
+    가위바위보의 손을 표시하는 클래스
+end note
+
++class PlayerStrategy {
+    -String name
+    -HandInterfaceStrategy strategy
+    -int winCount
+    -int loseCount
+    -int gameCount
+    {field}+PlayerStrategy(String name, HandInterfaceStrategy strategy)
+    +HandStrategy nextHand()
+    +void win()
+    +void lose()
+    +void even()
+    +String toString()
+}
+note top of PlayerStrategy
+    가위바위보를 하는 플레이어를 표시하는 클래스
+end note
+
++class ProbStrategy <implements HandInterfaceStrategy> {
+    -Random random;
+    -int prevHandValue
+    -int currentHandValue
+    -int[][] history
+    {field}+ProbStrategy(int seed)
+    +HandStrategy nextHand()
+    +void study(boolean win)
+    -int getSum(int hv)
+}
+note bottom of ProbStrategy
+    직전 손에서 다음 손을 확률적으로 계산하는 전략을 표시하는 클래스
+end note
+
++class WinningStrategy <implements HandInterfaceStrategy> {
+    -Random random
+    -boolean won
+    - {field}HandStrategy prevHand
+    +WinningStrategy(int seed)
+    +HandStrategy nextHand()
+    +void study(boolean win)
+}
+note bottom of WinningStrategy
+    이기면 다음에도 같은 손을 내는 전략을 표시하는 클래스
+end note
+
+HandStrategy -right-> PlayerStrategy
+PlayerStrategy o-right-> HandInterfaceStrategy
+WinningStrategy .up.|> HandInterfaceStrategy
+ProbStrategy .up.|> HandInterfaceStrategy
+@enduml
